@@ -1,0 +1,3 @@
+= Assembler for simple 16 bit processors:
+* <b>cypok</b>'s http://github.com/cypok/cpu
+* <b>NIA</b>'s http://github.com/NIA/ahdl-cpu
