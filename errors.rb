@@ -13,3 +13,11 @@ end
 class UnexpectedStuffAtTheEndError < Error
   @@msg = "unexpected stuff at the end of line ('%s...')"
 end
+
+class LabelAlreadyDefinedError < Error
+  @@msg = "label '%s' is already defined"
+end
+
+class InvalidArgumentError < Error
+  @@msg = "argument '%s' is neither integer nor label"
+end

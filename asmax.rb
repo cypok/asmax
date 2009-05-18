@@ -7,6 +7,7 @@ end
 require "pp"
 require "yaml"
 require "line.rb"
+require "label.rb"
 
 begin
   config = YAML.load( File.open ARGV[0] )
@@ -14,6 +15,9 @@ begin
 
   lines = parse2lines file.read
   lines.each { |l| puts l }
+  
+  labels = get_labels lines
+  pp labels
 
 rescue Error => error
   puts
