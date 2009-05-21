@@ -4,7 +4,6 @@ require "label.rb"
 def assemble(source, config)
   lines = parse_lines source
   labels = find_labels lines
-  puts labels
 
   ca = 0
   memory = []

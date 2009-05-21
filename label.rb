@@ -19,7 +19,6 @@ def find_labels(lines)
 
   lines.each do |line|
     if line.label
-      # TODO: check if label is valid identifier
       raise LabelAlreadyDefinedError, [ line.label, line.number ] if labels.has_key? line.label
 
       case line.op
