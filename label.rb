@@ -10,7 +10,7 @@ def parse_arg(line, labels = nil)
   end
 end
 
-def get_labels(lines)
+def find_labels(lines)
   labels = {}
   ca = 0 # current address
 
@@ -19,7 +19,7 @@ def get_labels(lines)
       # TODO: check if label is valid identifier
       raise LabelAlreadyDefinedError, [ line.label, line.number ] if labels.has_key? line.label
 
-      case line.op.downcase
+      case line.op
       when "orig"
         labels[line.label] = ca
         ca = parse_arg line, labels
@@ -30,7 +30,7 @@ def get_labels(lines)
         ca += 1
       end
     else
-      case line.op.downcase
+      case line.op
       when "orig"
         ca = parse_arg line, labels
       else
