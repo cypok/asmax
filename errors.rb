@@ -29,3 +29,15 @@ end
 class InvalidOpError < Error
   @@msg = "instruction '%s' is invalid"
 end
+
+class TooBigInstructionError < Error
+  @@msg = "instruction code (%i) is bigger or equal than maximum (%i)"
+end
+
+class TooBigArgumentError < Error
+  @@msg = "address (%i) is bigger or equal than maximum (%i)"
+end
+
+class UnknownInstructionError < Error
+  @@msg = "unknown instruction '%s'"
+end

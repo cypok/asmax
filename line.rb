@@ -1,18 +1,19 @@
 require "errors.rb"
 
+LABEL = /^[_A-Za-z][_A-Za-z0-9]*$/
+OP = /^[_A-Za-z][_A-Za-z0-9]*$/
+ARG_NUM_DEC = /^[0-9]*$/
+ARG_NUM_HEX = /^0x[0-9a-fA-F]+$/
+
 class Line
   attr_reader :label, :op, :arg, :number, :source
 
-  LABEL = /^[_A-Za-z][_A-Za-z0-9]*$/
-  OP = /^[_A-Za-z][_A-Za-z0-9]*$/
-  ARG_NUM = /^[0-9]*$/
-  
   def initialize(label, op, arg, number, source)
     op ||= ""
     arg ||= "0"
     raise InvalidLabelError, [label, number] unless not label or label =~ LABEL
     raise InvalidOpError, [op, number] unless op =~ OP
-    raise InvalidArgumentError, [arg, number] unless arg =~ ARG_NUM or arg =~ LABEL
+    raise InvalidArgumentError, [arg, number] unless arg =~ ARG_NUM_DEC or arg =~ ARG_NUM_HEX or arg =~ LABEL
     @label, @op, @arg, @number, @source = label, op, arg, number, source
   end
 

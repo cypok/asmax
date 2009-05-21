@@ -1,9 +1,12 @@
 require "errors.rb"
+require "line.rb"
 
-def parse_arg(line, labels = nil)
+def parse_arg(line, labels)
   labels ||= {}
-  if line.arg =~ /^\d+$/
+  if line.arg =~ ARG_NUM_DEC
     line.arg.to_i
+  elsif line.arg =~ ARG_NUM_HEX
+    line.arg.to_i( 16 )
   else
     raise InvalidArgumentError, [line.arg, line.number] unless labels.has_key? line.arg
     labels[line.arg]
