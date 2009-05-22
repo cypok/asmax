@@ -31,12 +31,12 @@ def parse_lines(str)
 
     # split line
     parts = line.downcase.split
-    next if parts.count == 0
+    next if parts.size == 0
 
     # add nil as label if no label
     parts.unshift( nil ) if ["\t", " "].include? line[0..0]
 
-    raise UnexpectedStuffAtTheEndError, [parts[3], number + 1] if parts.count > 3
+    raise UnexpectedStuffAtTheEndError, [parts[3], number + 1] if parts.size > 3
     lines << Line.new( parts[0], parts[1], parts[2], number + 1, line )
   end
   lines

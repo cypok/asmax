@@ -2,6 +2,7 @@
 if ARGV.size != 2
   puts "asmax, simple assembler for simple processors"
   puts "usage: ./asmax.rb config.yml file.asm"
+  exit
 end
 
 require "yaml"
