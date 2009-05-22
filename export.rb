@@ -17,8 +17,11 @@ def mem2mif(mem, config)
   out << "data_radix = hex;"
 
   out << "content begin"
+
+  addr_width = ( Math.log( size )/Math.log( 16 ) ).ceil
+  data_width = addr + op
   0.upto( size-1 ) do |i|
-    out << "%5i : %0#{addr + op}x; -- %s" % [i, mem[i][:data], mem[i][:comment]]
+    out << "    %0#{addr_width}x : %0#{data_width}x; -- %s" % [i, mem[i][:data], mem[i][:comment]]
   end
   out << "end;"
   out * "\n"
