@@ -1,43 +1,42 @@
 class Error < StandardError
-  @@msg = ""
   def initialize(arg_and_line_number = [nil, nil])
     @arg, @line_number = *arg_and_line_number
   end
 
   def to_s
     prefix = "Line #{@line_number}: " if @line_number
-    prefix.to_s + "Error, " + ( @@msg % @arg )
+    prefix.to_s + "Error, " + ( msg % @arg )
   end
 end
 
 class UnexpectedStuffAtTheEndError < Error
-  @@msg = "unexpected stuff at the end of line ('%s...')"
+  def msg; "unexpected stuff at the end of line ('%s...')" end
 end
 
 class LabelAlreadyDefinedError < Error
-  @@msg = "label '%s' is already defined"
+  def msg; "label '%s' is already defined" end
 end
 
 class InvalidArgumentError < Error
-  @@msg = "argument '%s' is neither integer nor label"
+  def msg; "argument '%s' is neither integer nor label" end
 end
 
 class InvalidLabelError < Error
-  @@msg = "label '%s' is invalid"
+  def msg; "label '%s' is invalid" end
 end
 
 class InvalidOpError < Error
-  @@msg = "instruction '%s' is invalid"
+  def msg; "instruction '%s' is invalid" end
 end
 
 class TooBigInstructionError < Error
-  @@msg = "instruction code (%i) is bigger or equal than maximum (%i)"
+  def msg; "instruction code (%i) is bigger or equal than maximum (%i)" end
 end
 
 class TooBigArgumentError < Error
-  @@msg = "address (%i) is bigger or equal than maximum (%i)"
+  def msg; "address (%i) is bigger or equal than maximum (%i)" end
 end
 
 class UnknownInstructionError < Error
-  @@msg = "unknown instruction '%s'"
+  def msg; "unknown instruction '%s'" end
 end
