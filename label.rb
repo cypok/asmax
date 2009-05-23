@@ -1,16 +1,37 @@
 require "errors.rb"
 require "line.rb"
 
-def parse_arg(line, labels)
+def parse_arg_ex(arg, line_number, labels)
   labels ||= {}
-  if line.arg =~ ARG_NUM_DEC
-    line.arg.to_i
-  elsif line.arg =~ ARG_NUM_HEX
-    line.arg.to_i( 16 )
+  # trying dec
+  if arg =~ ARG_NUM_DEC
+    arg.to_i
+  # trying hex
+  elsif arg =~ ARG_NUM_HEX
+    arg.to_i( 16 )
   else
-    raise InvalidArgumentError, [line.arg, line.number] unless labels.has_key? line.arg
-    labels[line.arg]
+    # trying to find math expression
+    [
+      [ "+", lambda {|x, y| x + y } ],
+      [ "-", lambda {|x, y| x - y } ],
+      [ "*", lambda {|x, y| x * y } ]
+    ].each do |char, func|
+      i = arg.index char
+      unless i.nil?
+        return func.call( 
+                  parse_arg_ex( arg[0..i-1], line_number, labels ),
+                  parse_arg_ex( arg[i+1..-1], line_number, labels )
+                 )
+      end
+    end
+
+    raise InvalidArgumentError, [arg, line_number] unless labels.has_key? arg
+    labels[arg]
   end
+end
+
+def parse_arg(line, labels)
+  parse_arg_ex line.arg, line.number, labels
 end
 
 def find_labels(lines)
