@@ -2,7 +2,7 @@
 if ARGV.size != 2
   puts "asmax, simple assembler for simple processors"
   puts "usage: ./asmax.rb config.yml file.asm"
-  exit
+  exit 1
 end
 
 require "yaml"
@@ -21,6 +21,6 @@ begin
   puts mif
 
 rescue Error => error
-  puts error
+  STDERR.write error
   exit 1
 end

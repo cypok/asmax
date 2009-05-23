@@ -13,7 +13,7 @@ class Line
     arg ||= "0"
     raise InvalidLabelError, [label, number] unless not label or label =~ LABEL
     raise InvalidOpError, [op, number] unless op =~ OP
-    raise InvalidArgumentError, [arg, number] unless arg =~ ARG_NUM_DEC or arg =~ ARG_NUM_HEX or arg =~ LABEL
+#    raise InvalidArgumentError, [arg, number] unless arg =~ ARG_NUM_DEC or arg =~ ARG_NUM_HEX or arg =~ LABEL
     @label, @op, @arg, @number, @source = label, op, arg, number, source
   end
 
@@ -27,7 +27,12 @@ def parse_lines(str)
   str.split( "\n" ).each_with_index do |line, number|
     # remove comment
     i = line.index ";"
-    line = line[0..(i-1)] unless i.nil?
+    unless i.nil?
+      next if i == 0 # commented line
+      line = line[0..i-1] unless i.nil? # cut comment
+    end
+
+    next if line.strip.length == 0
 
     # split line
     parts = line.downcase.split
